@@ -5,12 +5,12 @@ import meals from "../../assets/meals.jpg";
 //Componets
 import HeaderCartButton from "./HeaderCartButton";
 
-function Header() {
+function Header(props) {
   return (
     <Fragment>
       <header className={classes.header}>
         <h1>React Meals</h1>
-        <HeaderCartButton></HeaderCartButton>
+        <HeaderCartButton showCart={props.onShowCart}></HeaderCartButton>
       </header>
       <div className={classes["main-image"]}>
         <img src={meals} alt="Table of meals"></img>
