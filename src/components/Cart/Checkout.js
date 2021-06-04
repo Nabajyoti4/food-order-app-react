@@ -47,6 +47,13 @@ const Checkout = (props) => {
       return;
     }
 
+    props.setOrderHandler({
+      name: name,
+      street: street,
+      postal: postal,
+      city: city,
+    });
+
     //submit
   };
 
