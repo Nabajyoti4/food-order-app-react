@@ -10,3 +10,4 @@ A food order web application made on React with react hooks like useState, useEf
 3. Order item from cart with user data form validation 
 4. Store the data of order in firebase
 
+![alt text](https://github.com/Nabajyoti4/food-order-app-react/blob/main/screencapture-localhost-3000-2021-06-04-11_54_46.png)
