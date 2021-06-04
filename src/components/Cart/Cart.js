@@ -10,6 +10,8 @@ import Checkout from "./Checkout";
 function Cart(props) {
   const cartCtx = useContext(CartContext);
   const [isCheckout, setIsCheckout] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [didSubmit, setDidSubmit] = useState(false);
 
   // format the price to a small value
   const price = `$${cartCtx.totalAmount.toFixed(2)}`;
@@ -30,17 +32,24 @@ function Cart(props) {
     setIsCheckout(!isCheckout);
   };
 
-  const submitOrderHandler = (userData) => {
-    fetch(
-      "https://food-order-react-app-default-rtdb.firebaseio.com/orders.json",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          user: userData,
-          order: cartCtx.items,
-        }),
-      }
-    );
+  const submitOrderHandler = async (userData) => {
+    setIsSubmitting(true);
+    try {
+      const res = await fetch(
+        "https://food-order-react-app-default-rtdb.firebaseio.com/orders.json",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            user: userData,
+            order: cartCtx.items,
+          }),
+        }
+      );
+    } catch (err) {}
+
+    setIsSubmitting(false);
+    setDidSubmit(true);
+    cartCtx.clearCart();
   };
 
   const cartItems = (
@@ -57,8 +66,9 @@ function Cart(props) {
       ))}
     </ul>
   );
-  return (
-    <Modal onClose={props.cartShow}>
+
+  const cartModal = (
+    <React.Fragment>
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
@@ -82,6 +92,18 @@ function Cart(props) {
           )}
         </div>
       )}
+    </React.Fragment>
+  );
+
+  const isSubmittingModalContent = <p>Sending your order</p>;
+
+  const didSubmitOrder = <p>Succesfully ordered your Meal</p>;
+
+  return (
+    <Modal onClose={props.cartShow}>
+      {!isSubmitting && !didSubmit && cartModal}
+      {isSubmitting && isSubmittingModalContent}
+      {!isSubmitting && didSubmit && didSubmitOrder}
     </Modal>
   );
 }
