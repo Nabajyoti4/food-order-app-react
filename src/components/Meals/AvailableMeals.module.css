@@ -5,6 +5,24 @@
     animation: meals-appear 1s ease-out forwards;
 }
 
+.meals__loading {
+    text-align: center;
+    color: white;
+}
+
+.meals__error {
+    text-align: center;
+    color: white;
+    padding: 10px;
+    background-color: red;
+    max-width: 60rem;
+    border-radius: 20px;
+    margin: 2rem auto;
+    width: 90%;
+}
+
+
+
 .meals ul {
     list-style: none;
     margin: 0;
